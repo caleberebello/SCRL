@@ -20,6 +20,11 @@ def api_prova(lat1, lng1):
     res = requests.get(url)
     if res.status_code == 200:
         data = res.json()
-    return data
+        sunset = data['results']['sunset']
+        sunrise = data['results']['sunrise']
+    return '''
+            A hora que o sol nasce é: {}<br>
+            A hora que o sol se pôe é: {}
+            '''.format(sunrise, sunset)
 
 app.run()
