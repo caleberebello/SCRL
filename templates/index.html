@@ -1,0 +1,13 @@
+<!doctype html>
+<title>Teste</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<h1>Sistema de Regulação de Luminosidade</h1>
+<p>Este sistema irá verificar a luminosidade da localidade baseando na latitude e longitude</p>
+<form method="post">
+    <label for="">Latitude:</label><br>
+    <input type="float" name="lat1"><br>
+    <label for="">Longitude:</label><br>
+    <input type="float" name="lng1"><br>
+    <input type="submit" value="Bora">
+</form>
