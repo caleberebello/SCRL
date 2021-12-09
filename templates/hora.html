@@ -4,5 +4,47 @@
 
 <h1>Sistema de Regulação de Luminosidade</h1>
 <p>Este sistema irá verificar a luminosidade da localidade baseando na latitude e longitude</p>
-<p>A hora que o sol nasce é: {{ value1 }}</p>
-<p>A hora que o sol se põe é: {{ value }}</p>
+<p>A hora que o sol nasce é: <span id="v1">{{ value1 }}</span></p>
+<p>A hora que o sol se põe é: <span id="v">{{ value }}</span></p>
+<p id="demo"></p>
+<div id="container">
+    <div id="luz">
+        <p id="seila"></p>
+    </div>
+</div>
+
+<script>
+
+    function addZero(i) {
+        if (i < 10) {i = "0" + i}
+        return i;
+    }
+
+    function teste() {
+        var y = document.getElementById("v1")
+        var z = document.getElementById("v").innerText
+        z.split(":")
+        var x = document.getElementById("luz")
+        var fodase = z[0]+z[1]
+        var diff = h - fodase;
+        if (diff >= 0 && diff <= 3) { 
+            x.style.borderColor = "pink" 
+        }
+        else if (diff >= 4 && diff <= 7) {
+            x.style.borderColor = "yellow"
+        }
+        else {
+            x.style.borderColor = "blue"
+        }
+    }
+
+    const d = new Date();
+    let h = addZero(d.getHours());
+    let m = addZero(d.getMinutes());
+    let s = addZero(d.getSeconds());
+    let time = h + ":" + m + ":" + s;
+    document.getElementById("demo").innerHTML = time;
+
+    teste();
+    
+</script>
