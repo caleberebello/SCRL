@@ -1,15 +1,12 @@
 <!doctype html>
-<title>Teste</title>
+<title>SCRL</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='hora.css') }}">
 
 <h1>Sistema de Regulação de Luminosidade</h1>
 <p>Este sistema irá verificar a luminosidade da localidade baseando na latitude e longitude</p>
-<p>A hora que o sol nasce é: <span id="v1">{{ value1 }}</span></p>
-<p>A hora que o sol se põe é: <span id="v">{{ value }}</span></p>
-<p id="demo"></p>
+<p>A hora que o sol se põe é: <span id="v">{{ value }}</span> (Horário de Londres)</p>
 <div id="container">
     <div id="luz">
-        <p id="seila"></p>
     </div>
 </div>
 
@@ -20,21 +17,51 @@
         return i;
     }
 
+    function timeConversion(s) {
+        const ampm = s.slice(-2);
+        const hours = Number(s.slice(0, 2));
+        let time = s.slice(0, -2);
+        if (ampm === 'AM') {
+            if (hours === 12) { // 12am edge-case
+                return  time.replace(s.slice(0, 2), '00');
+            }
+            return time;
+        } else if (ampm === 'PM') {
+            if (hours !== 12) {
+                return time.replace(s.slice(0, 2), String(hours + 12));
+            } 
+            return time; // 12pm edge-case
+        }
+        return 'Error: AM/PM format is not valid';
+    }
+
     function teste() {
-        var y = document.getElementById("v1")
         var z = document.getElementById("v").innerText
-        z.split(":")
+        var y = z.split(":")
         var x = document.getElementById("luz")
-        var fodase = z[0]+z[1]
-        var diff = h - fodase;
-        if (diff >= 0 && diff <= 3) { 
-            x.style.borderColor = "pink" 
+        var hora = timeConversion(addZero(y[0])+":"+y[1]+":"+y[2])
+        var tempo = hora[0]+hora[1]
+        var diff = h -  tempo;
+        if (diff >= -7 && diff <= 3) { 
+            x.style.borderColor = "rgb(255, 207, 82)"
+            var tag = document.createElement("p")
+            var text = document.createTextNode("Luz muito forte!")
+            tag.appendChild(text)
+            x.appendChild(tag)
         }
         else if (diff >= 4 && diff <= 7) {
-            x.style.borderColor = "yellow"
+            x.style.borderColor = "rgb(255, 228, 158)"
+            var tag = document.createElement("p")
+            var text = document.createTextNode("Luz forte!")
+            tag.appendChild(text)
+            x.appendChild(tag)
         }
-        else {
-            x.style.borderColor = "blue"
+        else{
+            x.style.borderColor = "rgb(255, 243, 212)"
+            var tag = document.createElement("p")
+            var text = document.createTextNode("Luz apagada!")
+            tag.appendChild(text)
+            x.appendChild(tag)
         }
     }
 
@@ -43,7 +70,6 @@
     let m = addZero(d.getMinutes());
     let s = addZero(d.getSeconds());
     let time = h + ":" + m + ":" + s;
-    document.getElementById("demo").innerHTML = time;
 
     teste();
     
