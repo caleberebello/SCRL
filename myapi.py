@@ -15,16 +15,13 @@ def index():
 
 @app.route('/<lat1>/<lng1>', methods=['GET'])
 def api_prova(lat1, lng1):
-    url = f"https://api.sunrise-sunset.org/json?lat=" + lat1 + "&lng=" + lng1
+    url = f"https://api.sunrise-sunset.org/json?lat=" + lat1 + "&lng=" + lng1 + "$date=today"
     print(url)
     res = requests.get(url)
     if res.status_code == 200:
         data = res.json()
         sunset = data['results']['sunset']
         sunrise = data['results']['sunrise']
-    return '''
-            A hora que o sol nasce é: {}<br>
-            A hora que o sol se pôe é: {}
-            '''.format(sunrise, sunset)
+    return render_template("hora.html", value=sunset, value1=sunrise)
 
 app.run()
