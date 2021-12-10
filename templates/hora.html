@@ -41,7 +41,7 @@
         var x = document.getElementById("luz")
         var hora = timeConversion(addZero(y[0])+":"+y[1]+":"+y[2])
         var tempo = hora[0]+hora[1]
-        var diff = h -  tempo;
+        var diff = h - (tempo-4);
         if (diff >= -7 && diff <= 3) { 
             x.style.borderColor = "rgb(255, 207, 82)"
             var tag = document.createElement("p")
